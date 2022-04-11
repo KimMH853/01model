@@ -100,4 +100,5 @@ public class PurchaseVO {
 				+ receiverPhone + ", tranCode=" + tranCode + ", tranNo="
 				+ tranNo + "]";
 	}
+
 }

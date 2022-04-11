@@ -39,33 +39,30 @@ public class PurchaseDAO {
 	}
 
 	
-	public ProductVO getPurchase(int prodNo) throws Exception {
-			
-			Connection con = DBUtil.getConnection();
-	
-			String sql = "SELECT * FROM product WHERE prod_no=?";
-			
-			PreparedStatement stmt = con.prepareStatement(sql);
-			stmt.setInt(1, prodNo);
-	
-			ResultSet rs = stmt.executeQuery();
-	
-			ProductVO productVO = null;
-			while (rs.next()) {
-				productVO = new ProductVO();
-				productVO.setProdNo(rs.getInt("PROD_NO"));
-				productVO.setProdName(rs.getString("PROD_NAME"));
-				productVO.setProdDetail(rs.getString("PROD_DETAIL"));
-				productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
-				productVO.setPrice(rs.getInt("PRICE"));
-				productVO.setFileName(rs.getString("IMAGE_FILE"));
-				productVO.setRegDate(rs.getDate("REG_DATE"));
-			}
-			
-			con.close();
-	
-			return productVO;
-	}
+	/*
+	 * public ProductVO getPurchase(int prodNo) throws Exception {
+	 * 
+	 * Connection con = DBUtil.getConnection();
+	 * 
+	 * String sql = "SELECT * FROM product WHERE prod_no=?";
+	 * 
+	 * PreparedStatement stmt = con.prepareStatement(sql); stmt.setInt(1, prodNo);
+	 * 
+	 * ResultSet rs = stmt.executeQuery();
+	 * 
+	 * ProductVO productVO = null; while (rs.next()) { productVO = new ProductVO();
+	 * productVO.setProdNo(rs.getInt("PROD_NO"));
+	 * productVO.setProdName(rs.getString("PROD_NAME"));
+	 * productVO.setProdDetail(rs.getString("PROD_DETAIL"));
+	 * productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
+	 * productVO.setPrice(rs.getInt("PRICE"));
+	 * productVO.setFileName(rs.getString("IMAGE_FILE"));
+	 * productVO.setRegDate(rs.getDate("REG_DATE")); }
+	 * 
+	 * con.close();
+	 * 
+	 * return productVO; }
+	 */
 	  
 	/*
 	 * public HashMap<String,Object> getPurchaseList(SearchVO searchVO) throws
