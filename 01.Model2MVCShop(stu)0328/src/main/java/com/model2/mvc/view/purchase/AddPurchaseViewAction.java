@@ -15,7 +15,7 @@ public class AddPurchaseViewAction extends Action {
 
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		//System.out.println("에드액션뷰시작");
+		System.out.println("에드액션뷰시작");
 		
 		  int prodNo = Integer.parseInt(request.getParameter("prodNo")) ;
 		  

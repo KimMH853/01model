@@ -20,7 +20,7 @@ public class PurchaseDAO {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "INSERT INTO transaction VALUES (seq_transaction_tran_no.NEXTVAL,?,?,?,?,?,?,?,to_date(sysdate,'YYYY-MM-DD HH24:MI:SS'),?)";
+		String sql = "INSERT INTO transaction VALUES (seq_transaction_tran_no.NEXTVAL,?,?,?,?,?,?,?,?,to_date(sysdate,'YYYY-MM-DD HH24:MI:SS'),?)";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setInt(1, purchaseVO.getPurchaseProd().getProdNo());
@@ -29,13 +29,15 @@ public class PurchaseDAO {
 		stmt.setString(4, purchaseVO.getReceiverName());
 		stmt.setString(5, purchaseVO.getReceiverPhone());
 		stmt.setString(6, purchaseVO.getDivyAddr());
-		stmt.setString(7, purchaseVO.getTranCode());
-		stmt.setString(8, purchaseVO.getDivyDate());
+		stmt.setString(7, purchaseVO.getDivyRequest());
+		stmt.setString(8, purchaseVO.getTranCode());
+		stmt.setString(9, purchaseVO.getDivyDate());
 
 		int i = stmt.executeUpdate();
 		System.out.println("1번 insert 유뮤 : " + i + " 개 행이 만들어졌습니다.");
 
 		con.close();
+		
 	}
 
 	

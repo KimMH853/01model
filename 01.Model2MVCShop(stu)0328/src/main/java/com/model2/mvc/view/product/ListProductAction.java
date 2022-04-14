@@ -29,6 +29,7 @@ public class ListProductAction extends Action {
 		
 		ProductService service=new ProductServiceImpl();
 		HashMap<String,Object> map=service.getProductList(searchVO);
+		System.out.println(map);
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);

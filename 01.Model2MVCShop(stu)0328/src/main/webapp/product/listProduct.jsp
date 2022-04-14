@@ -206,9 +206,11 @@ function fncGetProductList(){
 		<td align="left"><%=vo.getManuDate() %></td>
 		<td></td>
 		<td align="left">
-		
+		<%-- <% if(vo.getProTranCode().equals("0")){%> --%>
 			판매중
-		
+		<%-- <%}else{ %>
+			구매완료
+		<% } %>	 --%>
 		</td>	
 	</tr>
 	<tr>
