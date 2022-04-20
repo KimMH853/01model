@@ -10,6 +10,7 @@ import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.common.util.DBUtil;
 import com.model2.mvc.service.product.vo.ProductVO;
 import com.model2.mvc.service.purchase.vo.PurchaseVO;
+import com.model2.mvc.service.user.vo.UserVO;
 
 public class PurchaseDAO {
 
@@ -67,22 +68,16 @@ public class PurchaseDAO {
 	 */
 	  
 	
-	public HashMap<String, Object> getPurchaseList(SearchVO searchVO) throws Exception {
+	public HashMap<String, Object> getPurchaseList(SearchVO searchVO, String userId) throws Exception {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "select * from USERS ";
-		if (searchVO.getSearchCondition() != null) {
-			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where USER_ID='" + searchVO.getSearchKeyword() + "'";
-			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where USER_NAME='" + searchVO.getSearchKeyword() + "'";
-			}
-		}
-		sql += " order by USER_ID";
-
+		String sql = "SELECT * FROM transaction WHERE BUYER_ID ='"+userId+"'";
+			
 		PreparedStatement stmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_UPDATABLE);
+		
+		
 		ResultSet rs = stmt.executeQuery();
 
 		rs.last();
@@ -100,15 +95,19 @@ public class PurchaseDAO {
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				PurchaseVO vo = new PurchaseVO();
-				vo.setPurchaseId(rs.getString("USER_ID"));
-				vo.setPurchaseName(rs.getString("USER_NAME"));
-				vo.setPassword(rs.getString("PASSWORD"));
-				vo.setRole(rs.getString("ROLE"));
-				vo.setSsn(rs.getString("SSN"));
-				vo.setPhone(rs.getString("CELL_PHONE"));
-				vo.setAddr(rs.getString("ADDR"));
-				vo.setEmail(rs.getString("EMAIL"));
-				vo.setRegDate(rs.getDate("REG_DATE"));
+				
+				ProductVO product = new ProductVO();
+				product.setProdNo(rs.getInt("PROD_NO"));
+				
+				vo.setTranNo(rs.getInt("TRAN_NO"));
+				vo.setPurchaseProd(product);
+				vo.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+				vo.setReceiverName(rs.getString("RECEIVER_NAME"));
+				vo.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+				vo.setDivyRequest(rs.getString("DLVY_REQUEST"));
+				vo.setTranCode(rs.getString("TRAN_STATUS_CODE"));
+				vo.setOrderDate(rs.getDate("ORDER_DATA"));
+				vo.setDivyDate(rs.getString("DLVY_DATE"));
 
 				list.add(vo);
 				if (!rs.next())
@@ -123,7 +122,7 @@ public class PurchaseDAO {
 
 		return map;
 	}
-
+/*
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
 
 		Connection con = DBUtil.getConnection();
@@ -142,5 +141,5 @@ public class PurchaseDAO {
 	}
 	 
 	  
-	 
+	*/ 
 }

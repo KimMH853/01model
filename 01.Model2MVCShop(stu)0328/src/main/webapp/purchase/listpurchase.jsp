@@ -11,10 +11,10 @@
 
 	
 	int total=0;
-	ArrayList<purchaseVO> list=null;
+	ArrayList<PurchaseVO> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
-		list=(ArrayList<purchaseVO>)map.get("list");
+		list=(ArrayList<PurchaseVO>)map.get("list");
 	}
 	
 	int currentPage=searchVO.getPage();

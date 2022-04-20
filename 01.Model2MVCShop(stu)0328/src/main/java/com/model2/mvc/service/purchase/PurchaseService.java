@@ -11,7 +11,7 @@ public void addPurchase(PurchaseVO purchaseVO) throws Exception;
 	
 	public PurchaseVO getPurchase(int prodNo) throws Exception;
 	
-	public HashMap<String, Object> getPurchaseList(SearchVO searchVO) throws Exception;
+	public HashMap<String, Object> getPurchaseList(SearchVO searchVO, String userId) throws Exception;
 	
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception;
 
