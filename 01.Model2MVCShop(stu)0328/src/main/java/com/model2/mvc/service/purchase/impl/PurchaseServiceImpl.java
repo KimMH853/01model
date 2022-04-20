@@ -24,8 +24,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	@Override
-	public PurchaseVO getPurchase(int prodNo) throws Exception {
-		return  null;//purchaseDAO.getPurchase(prodNo);
+	public PurchaseVO getPurchase(int tranNo) throws Exception {
+		return  null;//purchaseDAO.getPurchase(tranNo);
 	}
 
 	@Override

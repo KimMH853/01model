@@ -95,10 +95,11 @@ public class PurchaseDAO {
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				PurchaseVO vo = new PurchaseVO();
-				
+				UserVO user = new UserVO();
+				user.setUserId(rs.getString("buyer_id"));
 				ProductVO product = new ProductVO();
 				product.setProdNo(rs.getInt("PROD_NO"));
-				
+				vo.setBuyer(user);
 				vo.setTranNo(rs.getInt("TRAN_NO"));
 				vo.setPurchaseProd(product);
 				vo.setPaymentOption(rs.getString("PAYMENT_OPTION"));

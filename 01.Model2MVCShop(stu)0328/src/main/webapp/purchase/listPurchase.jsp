@@ -7,7 +7,7 @@
 <%
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
-	String menu = request.getParameter("menu");
+
 
 	
 	int total=0;
@@ -57,7 +57,7 @@
 
 <div style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/listUser.do" method="post">
+<form name="detailForm" action="/listPurchase.do" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -136,9 +136,13 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td align="center">
-		 
+		 <%
+			for(int i=1;i<=totalPage;i++){
+		%>
 			<a href="/listPurchase.do?page=<%=i%>"><%=i %></a> 
-		
+		<%
+			}
+		%>	
 		</td>
 	</tr>
 </table>

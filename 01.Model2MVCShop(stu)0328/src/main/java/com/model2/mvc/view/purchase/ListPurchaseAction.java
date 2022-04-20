@@ -4,11 +4,13 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.model2.mvc.common.SearchVO;
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.impl.PurchaseServiceImpl;
+import com.model2.mvc.service.user.vo.UserVO;
 
 public class ListPurchaseAction extends Action {
 
@@ -27,15 +29,21 @@ public class ListPurchaseAction extends Action {
 		String pageUnit=getServletContext().getInitParameter("pageSize");
 		searchVO.setPageUnit(Integer.parseInt(pageUnit));
 		
+
+		HttpSession session =request.getSession();
+		String userId = ((UserVO)session.getAttribute("user")).getUserId();
+		
 		PurchaseService service=new PurchaseServiceImpl();
-		HashMap<String,Object> map=service.getPurchaseList(searchVO);
+		HashMap<String,Object> map=service.getPurchaseList(searchVO, userId);
 		System.out.println("맵 : "+map);
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
-		
+		//request.setAttribute("userId", userId);
 		System.out.println("리스트액션");
-			return "forward:/purchase/listPurchase.jsp";
+			
+		
+		return "forward:/purchase/listPurchase.jsp";
 	
 			
 		
