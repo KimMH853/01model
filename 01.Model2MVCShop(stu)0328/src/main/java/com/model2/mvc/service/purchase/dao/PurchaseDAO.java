@@ -42,30 +42,46 @@ public class PurchaseDAO {
 	}
 
 	
-	/*
-	 * public ProductVO getPurchase(int prodNo) throws Exception {
-	 * 
-	 * Connection con = DBUtil.getConnection();
-	 * 
-	 * String sql = "SELECT * FROM product WHERE prod_no=?";
-	 * 
-	 * PreparedStatement stmt = con.prepareStatement(sql); stmt.setInt(1, prodNo);
-	 * 
-	 * ResultSet rs = stmt.executeQuery();
-	 * 
-	 * ProductVO productVO = null; while (rs.next()) { productVO = new ProductVO();
-	 * productVO.setProdNo(rs.getInt("PROD_NO"));
-	 * productVO.setProdName(rs.getString("PROD_NAME"));
-	 * productVO.setProdDetail(rs.getString("PROD_DETAIL"));
-	 * productVO.setManuDate(rs.getString("MANUFACTURE_DAY"));
-	 * productVO.setPrice(rs.getInt("PRICE"));
-	 * productVO.setFileName(rs.getString("IMAGE_FILE"));
-	 * productVO.setRegDate(rs.getDate("REG_DATE")); }
-	 * 
-	 * con.close();
-	 * 
-	 * return productVO; }
-	 */
+	
+	public PurchaseVO getPurchase(int tranNo) throws Exception {
+
+		Connection con = DBUtil.getConnection();
+
+		String sql = "SELECT * FROM transaction WHERE TRAN_NO=?";
+
+		PreparedStatement stmt = con.prepareStatement(sql);
+		stmt.setInt(1, tranNo);
+
+		ResultSet rs = stmt.executeQuery();
+
+		PurchaseVO purchaseVO = null;
+		while (rs.next()) {
+
+			purchaseVO = new PurchaseVO();
+
+			ProductVO product = new ProductVO();
+			product.setProdNo(rs.getInt("PROD_NO"));
+
+			UserVO user = new UserVO();
+			user.setUserId(rs.getString("buyer_id"));
+
+			purchaseVO.setTranNo(rs.getInt("TRAN_NO"));
+			purchaseVO.setPurchaseProd(product);
+			purchaseVO.setBuyer(user);
+			purchaseVO.setPaymentOption(rs.getString("PAYMENT_OPTION"));
+			purchaseVO.setReceiverName(rs.getString("RECEIVER_NAME"));
+			purchaseVO.setReceiverPhone(rs.getString("RECEIVER_PHONE"));
+			purchaseVO.setDivyAddr(rs.getString("DEMAILADDR"));
+			purchaseVO.setDivyRequest(rs.getString("DLVY_REQUEST"));
+			purchaseVO.setOrderDate(rs.getDate("ORDER_DATA"));
+			purchaseVO.setDivyDate(rs.getString("DLVY_DATE"));
+
+		}
+
+		con.close();
+
+		return purchaseVO;
+	}
 	  
 	
 	public HashMap<String, Object> getPurchaseList(SearchVO searchVO, String userId) throws Exception {
@@ -123,24 +139,29 @@ public class PurchaseDAO {
 
 		return map;
 	}
-/*
+
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
 
 		Connection con = DBUtil.getConnection();
 
-		String sql = "update USERS set USER_NAME=?,CELL_PHONE=?,ADDR=?,EMAIL=? where USER_ID=?";
+		String sql = "UPDATE transaction SET payment_option=?, receiver_name=?, receiver_phone=?, demailaddr=?, dlvy_request=?, dlvy_date=? WHERE tran_no=?";
 
 		PreparedStatement stmt = con.prepareStatement(sql);
-		stmt.setString(1, purchaseVO.getPurchaseName());
-		stmt.setString(2, purchaseVO.getPhone());
-		stmt.setString(3, purchaseVO.getAddr());
-		stmt.setString(4, purchaseVO.getEmail());
-		stmt.setString(5, purchaseVO.getPurchaseId());
-		stmt.executeUpdate();
+		
+		stmt.setString(1, purchaseVO.getPaymentOption());
+		stmt.setString(2, purchaseVO.getReceiverName());
+		stmt.setString(3, purchaseVO.getReceiverPhone());
+		stmt.setString(4, purchaseVO.getDivyAddr());
+		stmt.setString(5, purchaseVO.getDivyRequest());
+		stmt.setString(6, purchaseVO.getDivyDate());
+		stmt.setInt(7, purchaseVO.getTranNo());
+		
+		int i = stmt.executeUpdate();
+		System.out.println("1번 insert 유뮤 : " + i + " 개 행이 수정되었습니다.");
 
 		con.close();
 	}
 	 
 	  
-	*/ 
+	
 }

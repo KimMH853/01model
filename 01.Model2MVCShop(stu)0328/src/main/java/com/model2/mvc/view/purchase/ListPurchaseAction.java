@@ -39,7 +39,7 @@ public class ListPurchaseAction extends Action {
 
 		request.setAttribute("map", map);
 		request.setAttribute("searchVO", searchVO);
-		//request.setAttribute("userId", userId);
+		request.setAttribute("userId", userId);
 		System.out.println("리스트액션");
 			
 		

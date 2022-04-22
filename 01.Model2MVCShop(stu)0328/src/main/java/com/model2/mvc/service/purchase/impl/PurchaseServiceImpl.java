@@ -25,7 +25,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public PurchaseVO getPurchase(int tranNo) throws Exception {
-		return  null;//purchaseDAO.getPurchase(tranNo);
+		return  purchaseDAO.getPurchase(tranNo);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public void updatePurchase(PurchaseVO purchaseVO) throws Exception {
-		//purchaseDAO.updatePurchase(purchaseVO);
+		purchaseDAO.updatePurchase(purchaseVO);
 
 	}
 
