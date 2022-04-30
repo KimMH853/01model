@@ -1,7 +1,9 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 
 <%@ page import="java.util.*"  %>
 <%@ page import="com.model2.mvc.service.product.vo.*" %>
+<%@ page import="com.model2.mvc.service.user.vo.*" %>
 <%@ page import="com.model2.mvc.common.*" %>
 
 
@@ -18,6 +20,8 @@
 		list=(ArrayList<ProductVO>)map.get("list");
 	}
 	
+	System.out.println(list);
+	
 	int currentPage=searchVO.getPage();
 	
 	int totalPage=0;
@@ -26,6 +30,8 @@
 		if(total%searchVO.getPageUnit() >0)
 			totalPage += 1;
 	}
+	
+	UserVO user = (UserVO)session.getAttribute("user");
 %>
 
 
@@ -206,11 +212,18 @@ function fncGetProductList(){
 		<td align="left"><%=vo.getManuDate() %></td>
 		<td></td>
 		<td align="left">
-		<%-- <% if(vo.getProTranCode().equals("0")){%> --%>
-			판매중
-		<%-- <%}else{ %>
-			구매완료
-		<% } %>	 --%>
+		 <% if(vo.getProTranCode().trim().equals("0")) {%>
+		 	판매중
+		 <%} else if(vo.getProTranCode().trim().equals("1")) {%>
+		 	구매 완료
+		<% } else { %>
+			배송 완료	
+		<% } %>			 
+		
+		 <% if(user.getRole().trim().equals("admin") && vo.getProTranCode().trim().equals("1")){%>
+			<a href="/updateTranCodeByProd.do?prodNo=<%=vo.getProdNo()%>"> 배송하기</a>
+		
+		<% } %>
 		</td>	
 	</tr>
 	<tr>

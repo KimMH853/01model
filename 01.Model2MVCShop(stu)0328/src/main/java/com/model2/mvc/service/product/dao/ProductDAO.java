@@ -48,20 +48,20 @@ public class ProductDAO {
 		
 Connection con = DBUtil.getConnection();
 		
-		String sql = "select * from PRODUCT ";
+		String sql = "SELECT p.prod_no, p.prod_name, p.price, p.reg_date, NVL(t. tran_status_code, '0') tra FROM  product p, transaction t WHERE p.prod_no = t.prod_no(+)";
 		if (searchVO.getSearchCondition() != null) {
 			if (searchVO.getSearchCondition().equals("0")) {
-				sql += " where PROD_NO='" + searchVO.getSearchKeyword()
+				sql += " AND prod_no='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("1")) {
-				sql += " where PROD_NAME='" + searchVO.getSearchKeyword()
+				sql += " AND prod_name='" + searchVO.getSearchKeyword()
 						+ "'";
 			} else if (searchVO.getSearchCondition().equals("2")) {
-				sql += " where PRICE='" + searchVO.getSearchKeyword()
+				sql += " AND price='" + searchVO.getSearchKeyword()
 				+ "'";
 	}
 		}
-		sql += " order by PROD_NAME";
+		sql += " ORDER BY prod_name";
 
 		PreparedStatement stmt = 
 			con.prepareStatement(	sql,
@@ -84,14 +84,11 @@ Connection con = DBUtil.getConnection();
 		if (total > 0) {
 			for (int i = 0; i < searchVO.getPageUnit(); i++) {
 				ProductVO vo = new ProductVO();
-				vo.setProdNo(rs.getInt("PROD_No"));
-				vo.setProdName(rs.getString("PROD_NAME"));
-				vo.setFileName(rs.getString("IMAGE_FILE"));
-				vo.setProdDetail(rs.getString("PROD_DETAIL"));
-				vo.setManuDate(rs.getString("MANUFACTURE_DAY"));
-				vo.setPrice(rs.getInt("PRICE"));
-				vo.setRegDate(rs.getDate("REG_DATE"));
-
+				vo.setProdNo(rs.getInt("prod_no"));
+				vo.setProdName(rs.getString("prod_name"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setRegDate(rs.getDate("reg_date"));
+				vo.setProTranCode(rs.getString("tra"));
 				list.add(vo);
 				if (!rs.next())
 					break;
@@ -100,7 +97,7 @@ Connection con = DBUtil.getConnection();
 		System.out.println("list.size() : "+ list.size());
 		map.put("list", list);
 		System.out.println("map().size() : "+ map.size());
-
+		System.out.println("map : "+map);
 		con.close();
 			
 		return map;

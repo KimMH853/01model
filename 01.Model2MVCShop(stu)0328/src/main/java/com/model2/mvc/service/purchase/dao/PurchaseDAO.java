@@ -161,6 +161,24 @@ public class PurchaseDAO {
 
 		con.close();
 	}
+	
+	public void updateTranCode(PurchaseVO purchaseVO) throws Exception {
+		
+		Connection con = DBUtil.getConnection();
+		
+		String sql = "UPDATE transaction SET tran_status_code = ? WHERE tran_no = ?";
+		
+		PreparedStatement stmt = con.prepareStatement(sql);
+		
+		stmt.setString(1, purchaseVO.getTranCode());
+		stmt.setInt(2, purchaseVO.getTranNo());
+		
+		int i = stmt.executeUpdate();
+		System.out.println("TranCode 1번 insert 유뮤 : " + i + " 개 행이 수정되었습니다.");
+		
+		con.close();
+
+	}
 	 
 	  
 	

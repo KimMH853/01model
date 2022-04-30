@@ -1,6 +1,8 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page contentType="text/html; charset=EUC-KR"%>
 
 <%@ page import="java.util.*"  %>
+<%@ page import="com.model2.mvc.service.user.vo.*" %>
 <%@ page import="com.model2.mvc.service.purchase.vo.*" %>
 <%@ page import="com.model2.mvc.common.*" %>
 
@@ -8,15 +10,22 @@
 	HashMap<String,Object> map=(HashMap<String,Object>)request.getAttribute("map");
 	SearchVO searchVO=(SearchVO)request.getAttribute("searchVO");
 
-
+	UserVO userVO = (UserVO)session.getAttribute("user");
 	
-	int total=0;
+	 int total=0;
 	ArrayList<PurchaseVO> list=null;
 	if(map != null){
 		total=((Integer)map.get("count")).intValue();
 		list=(ArrayList<PurchaseVO>)map.get("list");
 	}
-	
+	 
+	/*  int total = 0;
+		List<PurchaseVO> list = null;
+		if(map != null){
+			total = ((Integer)map.get("count")).intValue();
+			list = (List<PurchaseVO>)map.get("list");
+		} 
+	  */
 	int currentPage=searchVO.getPage();
 	
 	int totalPage=0;
@@ -97,6 +106,7 @@
 		int no=list.size();
 		for(int i=0; i<list.size(); i++) {
 			PurchaseVO vo = (PurchaseVO)list.get(i);
+			System.out.println(vo);
 	%>	
 	
 	
@@ -113,14 +123,26 @@
 		<td></td>
 		<td align="left"><%= vo.getBuyer().getPhone() %></td>
 		<td></td>
-		<td align="left">현재
-				
-					배송중
-				상태 입니다.</td>
+		<td align="left">
+			<% if(vo.getTranCode().trim().equals("1")){ %>
+					현재 배송 중
+			<% }else if(vo.getTranCode().trim().equals("2")){ %>
+					현재 배송 완료
+			<% } else {%>
+			 		구매 완료
+			<% } %>
+			
+		</td>
 		<td></td>
 		<td align="left">
 			
-			<a href="/updateTranCode.do?tranNo=<%=vo.getTranNo() %>&tranCode=3">물건도착</a>
+			<% if(vo.getTranCode().trim().equals("1")){ %>
+			<a href="/updateTranCode.do?tranNo=<%=vo.getTranNo() %>&tranCode=2">수령 완료</a>
+			<%}else if(vo.getTranCode().trim().equals("0")){%>
+				배송 준비 중
+			<%} else{%>
+				배송 완료
+			<%} %>
 			
 		</td>
 	</tr>

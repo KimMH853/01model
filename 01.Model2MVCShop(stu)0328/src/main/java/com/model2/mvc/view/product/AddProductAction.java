@@ -1,7 +1,16 @@
 package com.model2.mvc.view.product;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.DiskFileUpload;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
 
 import com.model2.mvc.framework.Action;
 import com.model2.mvc.service.product.ProductService;
@@ -27,6 +36,10 @@ public class AddProductAction extends Action {
 		service.addProduct(productVO);
 //		request.setAttribute("productVO", productVO);
 		System.out.println(productVO+"1234");
+		
 		return "redirect:/product/addProduct.jsp";
 	}
+	
+
+	
 }
